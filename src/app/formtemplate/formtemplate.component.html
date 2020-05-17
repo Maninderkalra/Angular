@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="row justify-content-center mb-5">
+        <h3>Template Form With Submit Disabled Validation!</h3>
+    </div>
+    <div class="row justify-content-center" *ngIf="!isSubmitted">
+        <form class="col col-md-8 col-lg-8 offset-md-4" (ngSubmit)="onSubmit()" #testForm="ngForm">
+            <div class="row form-group">
+                <div class="col col-md-6 col-lg-6">
+                    <label>Name: </label>
+                <input type="text" id="fname" name="fname" class="form-control" 
+                [(ngModel)]='formDetails.fname' #fname="ngModel"
+                required>
+                </div>
+            </div>
+            <div [hidden]="fname.valid || fname.pristine"
+                class="alert alert-danger col-md-4 col-lg-4">
+                Name is required
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-6 col-lg-6">
+                    <label>Email: </label>
+                    <input type="email" id="email" name="email" class="form-control"
+                     [(ngModel)]='formDetails.email' #email="ngModel" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                     required>
+                </div>             
+            </div>
+            <div [hidden]="email.valid  || email.pristine" class="col-md-4 col-lg-4 alert alert-danger">
+                <small *ngIf="email.errors?.required">Email is required</small>
+                <!--question mark(?) is a safe navigation operator-->
+                <small *ngIf="email.errors?.pattern">Please provide a valid email address</small>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-6 col-lg-6">
+                    <label>Password: </label>
+                    <input type="password" class="form-control" id="password" 
+                     [(ngModel)]='formDetails.password' 
+                    name='password' #password="ngModel"
+                    required>
+                </div>
+            </div>
+            <div [hidden]="password.valid || password.pristine"
+            class="alert alert-danger col-md-4 col-lg-4">
+            Password is required
+            </div>
+
+            <button type="submit" class="btn btn-success" [disabled]="!testForm.form.valid">Submit</button>
+            <!-- <div class="row">
+                <div class="col col-md-6 col-lg-6">
+                    <input type="text" id="fname" name="fname" class="form-control" 
+                [ngModelOptions]="{standalone: true}" [(ngModel)]='formDetails.fname' 
+                required
+                [ngClass]="{'is-invalid': password.invalid }"
+                     [ngClass]="{'has-error': formDetails.email.valid || formDetails.email.pristine}" >
+                </div>
+            </div> -->
+            <!-- <p>{{formDetails | json}}</p> -->
+        </form>
+    </div>
+    <div class="row justify-content-center" *ngIf="isSubmitted">
+        <div class="col col-md-4 col-lg-4">
+            <p>Name: {{formDetails.fname}}</p>
+            <p>Email: {{formDetails.email}}</p>
+            <p>Password: {{formDetails.password}}</p>
+            <button class="btn btn-primary" (click)="isSubmitted=false">Edit</button>
+        </div>
+    </div>
+</div>

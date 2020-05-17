@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row justify-content-center mb-5">
+        <h3>Reactive Form With Validation!</h3>
+    </div>
+    <div class="row" *ngIf="!isSubmitted">
+        <form class="col-md-8 offset-md-4"  [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row form-group">
+                <div class="col-md-6 col-lg-6">
+                    <label>Name: </label>
+                    <input type="text" id="name" class="form-control" formControlName="name" [ngClass]="{'is-invalid': form.controls.name.errors}">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6 col-lg-6" >
+                    <label>Email: </label>
+                    <input type="email" id="email" class="form-control" formControlName="email" [ngClass]="{'is-invalid': form.controls.email.errors}">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6 col-lg-6">
+                    <label>Password: </label>
+                    <input type="password" id="password" class="form-control" formControlName="password" [ngClass]="{'is-invalid': form.controls.password.errors}">
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-3 col-lg-3 justify-content-center">
+                    <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="isSubmitted">
+        <div class="col col-md-4 col-lg-4">
+            <p>Name: {{formControls.name.value}} </p>
+            <p>Email: {{formControls.email.value}} </p>
+            <p>Password: {{form.controls.password.value}} </p>
+            <button class="btn btn-primary" (click)="isSubmitted=false">Edit</button>
+        </div>
+    </div>
+</div>
